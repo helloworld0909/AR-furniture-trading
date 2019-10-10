@@ -1,0 +1,62 @@
+{
+  materials: [
+    {
+      name: 'wire_008061138',
+      parameters: [
+        {
+          baseColor: "woods",
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0.1,
+        },
+        {
+          roughness: 0.3,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    suggested_collision: {
+         center: {
+            x: 0,
+            y: 0,
+            z: 0,
+         },
+         size: {
+            x: 1,
+            y: 1,
+            z: 1,
+         },
+         type: "Box",
+      },
+    file: 'sampledata/table_0/stolic.obj',
+    name: 'table_0',
+    recenter: 'root',
+    scale: 0.0132333000000000001,
+  },
+  samplers: [
+        {
+           file: "sampledata/table_0/woods.jpg",
+           name: "woods",
+           pipeline_name: "woods.jpg",
+        },
+     ],
+  version: '0.54:2',
+}
