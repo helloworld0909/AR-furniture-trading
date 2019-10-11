@@ -4,5 +4,6 @@
     <string name="ar_activity_name">Preview</string>
     <string name="buyer_fragment_name">Buy</string>
     <string name="seller_fragment_name">Sell</string>
+    <string name="ar_button_content_description">AR Preview</string>
 
 </resources>
