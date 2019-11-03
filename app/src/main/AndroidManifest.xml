@@ -2,11 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="edu.uci.cs297p.arfurniture">
-    <!-- Always needed for AR. -->
 
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Always needed for AR. -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- This tag indicates that this application requires ARCore. This results in the application
-        only being visible in the Google Play Store on devices that support ARCore. -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--
+ This tag indicates that this application requires ARCore. This results in the application
+        only being visible in the Google Play Store on devices that support ARCore.
+    -->
     <uses-feature
         android:name="android.hardware.camera.ar"
         android:required="true" />
@@ -18,9 +27,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning">
-        <!-- This tag indicates that this application requires ARCore. This results in the
+
+        <!--
+             This tag indicates that this application requires ARCore. This results in the
             application only being visible in the Google Play Store on devices that support
-            ARCore. -->
+            ARCore.
+        -->
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
@@ -30,10 +42,10 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ARActivity"
             android:configChanges="orientation|screenSize"
@@ -43,8 +55,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

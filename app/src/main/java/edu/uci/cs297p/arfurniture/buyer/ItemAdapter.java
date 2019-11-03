@@ -24,16 +24,26 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
     private final Context mContext;
     private List<BaseItem> mDataSet;
+    private OnItemClickListener mListener;
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public ItemViewHolder(CardView view) {
             super(view);
         }
+
+        public void bind(BaseItem item, OnItemClickListener listener) {
+            ((TextView) itemView.findViewById(R.id.item_name)).setText(item.getName());
+            ((TextView) itemView.findViewById(R.id.item_description)).setText(item.getDescription());
+            ((TextView) itemView.findViewById(R.id.item_price)).setText(item.getStringPrice());
+
+            itemView.setOnClickListener((View v) -> listener.onItemClick(item));
+        }
     }
 
-    public ItemAdapter(Context context, List<BaseItem> data) {
+    public ItemAdapter(Context context, List<BaseItem> data, OnItemClickListener listener) {
         mContext = context;
         mDataSet = data;
+        mListener = listener;
     }
 
     @NonNull
@@ -46,9 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         BaseItem item = mDataSet.get(position);
-        ((TextView) viewHolder.itemView.findViewById(R.id.item_name)).setText(item.getName());
-        ((TextView) viewHolder.itemView.findViewById(R.id.item_description)).setText(item.getDescription());
-        ((TextView) viewHolder.itemView.findViewById(R.id.item_price)).setText(item.getStringPrice());
+        ((ItemViewHolder) viewHolder).bind(item, mListener);
 
         ImageButton arButton = viewHolder.itemView.findViewById(R.id.ar_button);
 
@@ -77,4 +85,8 @@ public class ItemAdapter extends RecyclerView.Adapter {
         intent.putExtras(params);
         return intent;
     }
+}
+
+interface OnItemClickListener {
+    void onItemClick(BaseItem item);
 }

@@ -22,7 +22,7 @@ import edu.uci.cs297p.arfurniture.item.Furniture;
 public class BuyerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.buyer, viewGroup, false);
+        View rootView = inflater.inflate(R.layout.fragment_buyer, viewGroup, false);
 
         RecyclerView itemRecyclerView = rootView.findViewById(R.id.item_list);
 
@@ -46,7 +46,16 @@ public class BuyerFragment extends Fragment {
                         199.99F, 1L, new Timestamp(0), new ArrayList<>(), Furniture.SOFA)
         );
 
-        RecyclerView.Adapter adapter = new ItemAdapter(getContext(), hardcodedDataSet);
+        RecyclerView.Adapter adapter = new ItemAdapter(getContext(), hardcodedDataSet, (BaseItem item) ->
+        {
+            Fragment itemFragment = new ItemFragment();
+            getFragmentManager().beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .add(R.id.content_container, itemFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        );
         itemRecyclerView.setAdapter(adapter);
 
         return rootView;
