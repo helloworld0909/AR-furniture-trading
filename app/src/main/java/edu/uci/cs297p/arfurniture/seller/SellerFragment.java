@@ -11,6 +11,6 @@ import edu.uci.cs297p.arfurniture.R;
 public class SellerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.seller, viewGroup, false);
+        return inflater.inflate(R.layout.fragment_seller, viewGroup, false);
     }
 }
