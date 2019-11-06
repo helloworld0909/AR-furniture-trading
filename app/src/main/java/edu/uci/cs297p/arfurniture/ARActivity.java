@@ -20,6 +20,9 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
+import edu.uci.cs297p.arfurniture.item.ARSupportItem;
+import edu.uci.cs297p.arfurniture.item.BaseItem;
+
 
 public class ARActivity extends AppCompatActivity {
     private static final String TAG = ARActivity.class.getSimpleName();
@@ -28,7 +31,7 @@ public class ARActivity extends AppCompatActivity {
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
 
-    public static String MODEL_NAME_KEY = "model_name";
+    public static String ITEM_KEY = "item";
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -44,7 +47,11 @@ public class ARActivity extends AppCompatActivity {
         setContentView(R.layout.ar);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
-        String modelName = getIntent().getStringExtra(MODEL_NAME_KEY);
+        BaseItem item = (BaseItem) getIntent().getSerializableExtra(ITEM_KEY);
+        if (!(item instanceof ARSupportItem)) {
+            throw new IllegalArgumentException("Item does not support AR");
+        }
+        String modelName = ((ARSupportItem) item).getModelName();
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
         // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().

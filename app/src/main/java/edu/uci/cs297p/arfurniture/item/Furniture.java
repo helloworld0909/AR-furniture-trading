@@ -1,22 +1,20 @@
 package edu.uci.cs297p.arfurniture.item;
 
-import android.graphics.Bitmap;
 import android.support.annotation.IntDef;
 
-import com.google.ar.sceneform.math.Vector3;
-
+import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Furniture extends BaseItem implements ARSupportItem {
+public class Furniture extends BaseItem implements ARSupportItem, Serializable {
 
     private @Category
     int category;
     private boolean previewable;
     private String modelName;
-    private Vector3 sizeVector;
+    private Float[] sizeVector;
     private int color;
 
     @IntDef({TABLE, CHAIR, BED, SOFA, STORAGE, OTHER})
@@ -31,14 +29,14 @@ public class Furniture extends BaseItem implements ARSupportItem {
     public static final int STORAGE = 4;
     public static final int OTHER = Integer.MAX_VALUE;
 
-    public Furniture(long itemId, String name, String description, float price, long sellerId, Timestamp addedTimestamp, List<Bitmap> pictures, @Category int category) {
-        super(itemId, name, description, price, sellerId, addedTimestamp, pictures);
+    public Furniture(long itemId, String name, String description, float price, long sellerId, Timestamp addedTimestamp, List<String> imageUrls, @Category int category) {
+        super(itemId, name, description, price, sellerId, addedTimestamp, imageUrls);
         this.previewable = false;
         this.category = category;
     }
 
-    public Furniture(long itemId, String name, String description, float price, long sellerId, Timestamp addedTimestamp, List<Bitmap> pictures, @Category int category, String modelName, float length, float width, float height, int color) {
-        this(itemId, name, description, price, sellerId, addedTimestamp, pictures, category);
+    public Furniture(long itemId, String name, String description, float price, long sellerId, Timestamp addedTimestamp, List<String> imageUrls, @Category int category, String modelName, float length, float width, float height, int color) {
+        this(itemId, name, description, price, sellerId, addedTimestamp, imageUrls, category);
         setARData(modelName, length, width, height, color);
     }
 
@@ -49,7 +47,7 @@ public class Furniture extends BaseItem implements ARSupportItem {
 
     public void setARData(String modelName, float length, float width, float height, int color) {
         this.modelName = modelName;
-        this.sizeVector = new Vector3(length, width, height);
+        this.sizeVector = new Float[]{length, width, height};
         this.color = color;
         this.previewable = true;
     }
@@ -60,7 +58,7 @@ public class Furniture extends BaseItem implements ARSupportItem {
     }
 
     @Override
-    public Vector3 getSizeVector() {
+    public Float[] getSizeVector() {
         return sizeVector;
     }
 }
