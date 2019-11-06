@@ -64,7 +64,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
             arButton.setEnabled(true);
             arButton.setVisibility(View.VISIBLE);
             arButton.setOnClickListener((View view) -> {
-                Intent myIntent = createIntent(((ARSupportItem) item).getModelName());
+                Intent myIntent = createIntent(item);
                 mContext.startActivity(myIntent);
             });
         } else {
@@ -78,9 +78,9 @@ public class ItemAdapter extends RecyclerView.Adapter {
         return mDataSet.size();
     }
 
-    private Intent createIntent(String modelName) {
+    private Intent createIntent(BaseItem item) {
         Bundle params = new Bundle();
-        params.putString(ARActivity.MODEL_NAME_KEY, modelName);
+        params.putSerializable(ARActivity.ITEM_KEY, item);
         Intent intent = new Intent(mContext, ARActivity.class);
         intent.putExtras(params);
         return intent;

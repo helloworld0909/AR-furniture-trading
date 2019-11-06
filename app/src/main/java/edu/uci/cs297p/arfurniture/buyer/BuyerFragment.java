@@ -40,7 +40,9 @@ public class BuyerFragment extends Fragment {
                         49.99F, 0L, new Timestamp(0), new ArrayList<>(), Furniture.TABLE, "table_0", 1F, 0.5F, 0.5F, Color.YELLOW),
                 new Furniture(1L, "A pretty chair",
                         "This chair is very good! This chair is very good! This chair is very good!",
-                        99.99F, 1L, new Timestamp(0), new ArrayList<>(), Furniture.CHAIR, "chair_0", 0.5F, 0.5F, 1F, Color.BLACK),
+                        99.99F, 1L, new Timestamp(0), Arrays.asList(
+                        "https://m.media-amazon.com/images/I/71kHxfeqNaL._AC_UL320_ML3_.jpg",
+                        "https://images-na.ssl-images-amazon.com/images/I/41lbJSuAzbL._SL500_.jpg"), Furniture.CHAIR, "chair_0", 0.5F, 0.5F, 1F, Color.BLACK),
                 new Furniture(1L, "A giant sofa",
                         "This sofa cannot be previewed, so the button is missing",
                         199.99F, 1L, new Timestamp(0), new ArrayList<>(), Furniture.SOFA)
@@ -49,6 +51,10 @@ public class BuyerFragment extends Fragment {
         RecyclerView.Adapter adapter = new ItemAdapter(getContext(), hardcodedDataSet, (BaseItem item) ->
         {
             Fragment itemFragment = new ItemFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("item", item);
+            itemFragment.setArguments(args);
+
             getFragmentManager().beginTransaction()
                     .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                     .add(R.id.content_container, itemFragment)

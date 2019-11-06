@@ -1,29 +1,29 @@
 package edu.uci.cs297p.arfurniture.item;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class BaseItem {
+public abstract class BaseItem implements Serializable {
     private long itemId;
     private String name;
     private String description;
     private float price;
     private long sellerId;
     private Timestamp addedTimestamp;
-    private List<Bitmap> pictures;
+    private List<String> imageUrls;
 
-    public BaseItem(long itemId, String name, String description, float price, long sellerId, Timestamp addedTimestamp, List<Bitmap> pictures) {
+    public BaseItem(long itemId, String name, String description, float price, long sellerId, Timestamp addedTimestamp, List<String> imageUrls) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.sellerId = sellerId;
         this.addedTimestamp = addedTimestamp;
-        this.pictures = pictures;
+        this.imageUrls = imageUrls;
     }
 
     public long getItemId() {
@@ -50,8 +50,8 @@ public abstract class BaseItem {
         return addedTimestamp;
     }
 
-    public List<Bitmap> getPictures() {
-        return pictures;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 
     @NonNull
