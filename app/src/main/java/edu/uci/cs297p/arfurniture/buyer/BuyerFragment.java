@@ -41,19 +41,6 @@ public class BuyerFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         itemRecyclerView.setLayoutManager(layoutManager);
 
-//        List<BaseItem> hardcodedDataSet = Arrays.asList(
-//                new Furniture(0L, "A beautiful table",
-//                        "This table is very good! This table is very good! This table is very good!",
-//                        49.99F, 0L, new Timestamp(0), new ArrayList<>(), Furniture.TABLE, "table_0", 1F, 0.5F, 0.5F, Color.YELLOW),
-//                new Furniture(1L, "A pretty chair",
-//                        "This chair is very good! This chair is very good! This chair is very good!",
-//                        99.99F, 1L, new Timestamp(0), Arrays.asList(
-//                        "https://m.media-amazon.com/images/I/71kHxfeqNaL._AC_UL320_ML3_.jpg",
-//                        "https://images-na.ssl-images-amazon.com/images/I/41lbJSuAzbL._SL500_.jpg"), Furniture.CHAIR, "chair_0", 0.5F, 0.5F, 1F, Color.BLACK),
-//                new Furniture(1L, "A giant sofa",
-//                        "This sofa cannot be previewed, so the button is missing",
-//                        199.99F, 1L, new Timestamp(0), new ArrayList<>(), Furniture.SOFA)
-//        );
         List<Item> dataSet = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -69,7 +56,7 @@ public class BuyerFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TEST", document.getId() + " => " + document.getData());
                         dataSet.add(new Item(document.getId(), document.get("name").toString(), document.get("description").toString(),
-                                document.get("modelName").toString(), document.get("price").toString(), new ArrayList<>()));
+                                document.get("modelName").toString(), document.get("price").toString(), (List<String>)document.get("imageURLs")));
                     }
 
                     RecyclerView.Adapter adapter = new ItemAdapter(getContext(), dataSet, (Item item) ->
