@@ -1,8 +1,8 @@
 package edu.uci.cs297p.arfurniture;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import edu.uci.cs297p.arfurniture.buyer.BuyerFragment;
 import edu.uci.cs297p.arfurniture.seller.SellerFragment;

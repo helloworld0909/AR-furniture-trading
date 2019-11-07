@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -21,7 +21,7 @@ import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 import edu.uci.cs297p.arfurniture.item.ARSupportItem;
-import edu.uci.cs297p.arfurniture.item.BaseItem;
+import edu.uci.cs297p.arfurniture.item.Item;
 
 
 public class ARActivity extends AppCompatActivity {
@@ -47,7 +47,7 @@ public class ARActivity extends AppCompatActivity {
         setContentView(R.layout.ar);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
-        BaseItem item = (BaseItem) getIntent().getSerializableExtra(ITEM_KEY);
+        Item item = (Item) getIntent().getSerializableExtra(ITEM_KEY);
         if (!(item instanceof ARSupportItem)) {
             throw new IllegalArgumentException("Item does not support AR");
         }

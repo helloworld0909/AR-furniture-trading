@@ -3,9 +3,9 @@ package edu.uci.cs297p.arfurniture.buyer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +17,13 @@ import java.util.List;
 import edu.uci.cs297p.arfurniture.ARActivity;
 import edu.uci.cs297p.arfurniture.R;
 import edu.uci.cs297p.arfurniture.item.ARSupportItem;
-import edu.uci.cs297p.arfurniture.item.BaseItem;
+import edu.uci.cs297p.arfurniture.item.Item;
 
 
 public class ItemAdapter extends RecyclerView.Adapter {
 
     private final Context mContext;
-    private List<BaseItem> mDataSet;
+    private List<Item> mDataSet;
     private OnItemClickListener mListener;
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -31,16 +31,16 @@ public class ItemAdapter extends RecyclerView.Adapter {
             super(view);
         }
 
-        public void bind(BaseItem item, OnItemClickListener listener) {
+        public void bind(Item item, OnItemClickListener listener) {
             ((TextView) itemView.findViewById(R.id.item_name)).setText(item.getName());
             ((TextView) itemView.findViewById(R.id.item_description)).setText(item.getDescription());
-            ((TextView) itemView.findViewById(R.id.item_price)).setText(item.getStringPrice());
+            ((TextView) itemView.findViewById(R.id.item_price)).setText(item.getPrice());
 
             itemView.setOnClickListener((View v) -> listener.onItemClick(item));
         }
     }
 
-    public ItemAdapter(Context context, List<BaseItem> data, OnItemClickListener listener) {
+    public ItemAdapter(Context context, List<Item> data, OnItemClickListener listener) {
         mContext = context;
         mDataSet = data;
         mListener = listener;
@@ -55,7 +55,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        BaseItem item = mDataSet.get(position);
+        Item item = mDataSet.get(position);
         ((ItemViewHolder) viewHolder).bind(item, mListener);
 
         ImageButton arButton = viewHolder.itemView.findViewById(R.id.ar_button);
@@ -78,7 +78,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
         return mDataSet.size();
     }
 
-    private Intent createIntent(BaseItem item) {
+    private Intent createIntent(Item item) {
         Bundle params = new Bundle();
         params.putSerializable(ARActivity.ITEM_KEY, item);
         Intent intent = new Intent(mContext, ARActivity.class);
@@ -88,5 +88,5 @@ public class ItemAdapter extends RecyclerView.Adapter {
 }
 
 interface OnItemClickListener {
-    void onItemClick(BaseItem item);
+    void onItemClick(Item item);
 }

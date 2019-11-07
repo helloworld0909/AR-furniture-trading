@@ -36,11 +36,15 @@ dependencies {
     // Alternatively, use ArSceneView without the UX dependency.
     //implementation "com.google.ar.sceneform:core:1.12.0"
 
-    implementation "com.android.support:appcompat-v7:28.0.0"
-    implementation "com.android.support:design:28.0.0"
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'me.relex:circleindicator:1.2.2@aar'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
@@ -54,3 +58,5 @@ sceneform.asset('sampledata/table_0/stolic.obj',
         'default',
         'sampledata/table_0/stolic.sfa',
         'src/main/res/raw/table_0')
+
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

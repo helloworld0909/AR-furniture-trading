@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "522241026472",
+    "firebase_url": "https://arfurniture-37e99.firebaseio.com",
+    "project_id": "arfurniture-37e99",
+    "storage_bucket": "arfurniture-37e99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522241026472:android:d21d39b81312f75cf0d59d",
+        "android_client_info": {
+          "package_name": "edu.uci.cs297p.arfurniture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522241026472-siclk83aj8tcu64h7dk14mbj3jmnh6bd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp_B8VSM29LW6Duu0nNdZOJ-EIAzkV5CM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522241026472-siclk83aj8tcu64h7dk14mbj3jmnh6bd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
