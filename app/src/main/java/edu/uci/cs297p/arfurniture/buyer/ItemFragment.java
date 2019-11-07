@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import edu.uci.cs297p.arfurniture.ARActivity;
 import edu.uci.cs297p.arfurniture.R;
-import edu.uci.cs297p.arfurniture.item.ARSupportItem;
 import edu.uci.cs297p.arfurniture.item.Item;
 import me.relex.circleindicator.CircleIndicator;
 
@@ -45,7 +44,7 @@ public class ItemFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.item_price)).setText(item.getPrice());
 
         ImageButton arButton = rootView.findViewById(R.id.ar_button);
-        if (item instanceof ARSupportItem && ((ARSupportItem) item).isPreviewable()) {
+        if (item.isPreviewable()) {
             arButton.setEnabled(true);
             arButton.setVisibility(View.VISIBLE);
             arButton.setOnClickListener((View view) -> {

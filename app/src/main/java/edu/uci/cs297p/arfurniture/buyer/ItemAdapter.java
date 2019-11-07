@@ -16,7 +16,6 @@ import java.util.List;
 
 import edu.uci.cs297p.arfurniture.ARActivity;
 import edu.uci.cs297p.arfurniture.R;
-import edu.uci.cs297p.arfurniture.item.ARSupportItem;
 import edu.uci.cs297p.arfurniture.item.Item;
 
 
@@ -60,7 +59,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
         ImageButton arButton = viewHolder.itemView.findViewById(R.id.ar_button);
 
-        if (item instanceof ARSupportItem && ((ARSupportItem) item).isPreviewable()) {
+        if (item.isPreviewable()) {
             arButton.setEnabled(true);
             arButton.setVisibility(View.VISIBLE);
             arButton.setOnClickListener((View view) -> {

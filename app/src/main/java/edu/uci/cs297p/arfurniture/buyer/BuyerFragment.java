@@ -55,8 +55,7 @@ public class BuyerFragment extends Fragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TEST", document.getId() + " => " + document.getData());
-                        dataSet.add(new Item(document.getId(), document.get("name").toString(), document.get("description").toString(),
-                                document.get("modelName").toString(), document.get("price").toString(), (List<String>)document.get("imageURLs")));
+                        dataSet.add(constructItem(document));
                     }
 
                     RecyclerView.Adapter adapter = new ItemAdapter(getContext(), dataSet, (Item item) ->
@@ -81,5 +80,17 @@ public class BuyerFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private Item constructItem(QueryDocumentSnapshot document) {
+        Item item = new Item(document.getId(), document.get("name").toString(),
+                document.get("description").toString(), document.get("price").toString());
+        if (document.get("imageURLs") != null) {
+            item.setImageUrls((List<String>) document.get("imageURLs"));
+        }
+        if (document.get("modelName") != null) {
+            item.setModelName(document.get("modelName").toString());
+        }
+        return item;
     }
 }
