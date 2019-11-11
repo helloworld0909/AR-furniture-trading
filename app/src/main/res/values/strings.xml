@@ -7,4 +7,14 @@
     <string name="ar_button_content_description">AR Preview</string>
     <string name="item_image_content_description">Item Image</string>
 
+    <string name="seller_fragment_title">Choose your furniture</string>
+    <string name="category_icon_content_description">Category Icon</string>
+
+    <string name="table">Table</string>
+    <string name="chair">Chair</string>
+    <string name="bed">Bed</string>
+    <string name="sofa">Sofa</string>
+    <string name="cabinet">Cabinet</string>
+    <string name="others">Others</string>
+
 </resources>
