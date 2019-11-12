@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Item implements Serializable{
     private String itemId;
-    private String name;
+    private String category;
+    private String title;
     private String description;
     private String modelName;
     private String price;
     private List<String> imageUrls;
     private boolean previewable;
 
-    public Item(String itemId, String name, String description, String price) {
-        this.itemId = itemId;
-        this.name = name;
+    public Item(String title, String description, String price) {
+        this.title = title;
         this.description = description;
         this.price = price;
     }
@@ -28,7 +28,11 @@ public class Item implements Serializable{
         this.imageUrls = imageUrls;
     }
 
-    public String getName() { return name; }
+    public void setCategory(String category) { this.category = category; }
+
+    public void setItemId(String itemId) { this.itemId = itemId; }
+
+    public String getName() { return title; }
 
     public String getDescription() { return description; }
 

@@ -83,8 +83,10 @@ public class BuyerFragment extends Fragment {
     }
 
     private Item constructItem(QueryDocumentSnapshot document) {
-        Item item = new Item(document.getId(), document.get("name").toString(),
-                document.get("description").toString(), document.get("price").toString());
+        Item item = new Item(document.get("name").toString(), document.get("description").toString(),
+                document.get("price").toString());
+        item.setCategory(document.get("category").toString());
+        item.setItemId(document.getId());
         if (document.get("imageURLs") != null) {
             item.setImageUrls((List<String>) document.get("imageURLs"));
         }
