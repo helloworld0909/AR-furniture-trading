@@ -1,22 +1,42 @@
 package edu.uci.cs297p.arfurniture.item;
 
+import androidx.annotation.IntDef;
+
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-public class Item implements Serializable{
+public class Item implements Serializable {
     private String itemId;
-    private String category;
-    private String title;
+    private String name;
     private String description;
     private String modelName;
     private String price;
     private List<String> imageUrls;
     private boolean previewable;
 
-    public Item(String title, String description, String price) {
-        this.title = title;
+    @Category
+    private int category;
+
+    @IntDef({TABLE, CHAIR, BED, SOFA, STORAGE, OTHER})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Category {
+    }
+
+    public static final int TABLE = 0;
+    public static final int CHAIR = 1;
+    public static final int BED = 2;
+    public static final int SOFA = 3;
+    public static final int STORAGE = 4;
+    public static final int OTHER = Integer.MAX_VALUE;
+
+    public Item(String itemId, String name, String description, String price, @Category int category) {
+        this.itemId = itemId;
+        this.name = name;
         this.description = description;
         this.price = price;
+        this.category = category;
     }
 
     public void setModelName(String modelName) {
@@ -28,19 +48,32 @@ public class Item implements Serializable{
         this.imageUrls = imageUrls;
     }
 
-    public void setCategory(String category) { this.category = category; }
+    public String getName() {
+        return name;
+    }
 
-    public void setItemId(String itemId) { this.itemId = itemId; }
+    public String getDescription() {
+        return description;
+    }
 
-    public String getName() { return title; }
+    public String getPrice() {
+        return price;
+    }
 
-    public String getDescription() { return description; }
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
 
-    public String getPrice() { return price; }
+    public String getModelName() {
+        return modelName;
+    }
 
-    public List<String> getImageUrls() { return imageUrls; }
+    @Category
+    public int getCategory() {
+        return category;
+    }
 
-    public String getModelName() {return modelName; }
-
-    public boolean isPreviewable() { return previewable; }
+    public boolean isPreviewable() {
+        return previewable;
+    }
 }

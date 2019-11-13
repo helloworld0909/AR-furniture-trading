@@ -17,4 +17,9 @@
     <string name="cabinet">Cabinet</string>
     <string name="others">Others</string>
 
+    <string name="item_name_label">Name</string>
+    <string name="item_description_label">Description</string>
+    <string name="item_price_label">Price</string>
+    <string name="submit">Submit</string>
+
 </resources>
