@@ -6,11 +6,13 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
@@ -18,8 +20,8 @@ import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
-import com.google.ar.sceneform.ux.TransformableNode;
 
+import edu.uci.cs297p.arfurniture.ar.ItemNode;
 import edu.uci.cs297p.arfurniture.item.Item;
 
 
@@ -44,6 +46,9 @@ public class ARActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.ar);
+        View menuView = findViewById(R.id.item_menu);
+        menuView.setVisibility(View.GONE);
+
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
         Item item = (Item) getIntent().getSerializableExtra(ITEM_KEY);
@@ -79,10 +84,12 @@ public class ARActivity extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
 
                     // Create the transformable and add it to the anchor.
-                    TransformableNode node = new TransformableNode(arFragment.getTransformationSystem());
+                    ItemNode node = new ItemNode(this, menuView, arFragment.getTransformationSystem());
                     node.setParent(anchorNode);
                     node.setRenderable(modelRenderable);
                     node.select();
+
+                    menuView.setVisibility(View.VISIBLE);
                 });
     }
 
