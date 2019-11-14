@@ -1,6 +1,7 @@
 package edu.uci.cs297p.arfurniture.seller;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import edu.uci.cs297p.arfurniture.R;
 import edu.uci.cs297p.arfurniture.item.Item;
@@ -55,7 +66,32 @@ public class SellerFragment extends Fragment implements PostItemListener {
         mArgs.putAll(args);
         Toast.makeText(getContext(), mArgs.toString(), Toast.LENGTH_LONG).show();
 
-        //TODO: Post item to the backend
+        // Post item to the backend
+        // TODO: Add imageURLs and AR model attributes
+        Map<String, Object> itemData = new HashMap<>();
+        Set<String> ks = mArgs.keySet();
+        Iterator<String> iterator = ks.iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            itemData.put(key, mArgs.get(key));
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("items")
+                .add(itemData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("TEST", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TEST", "Error adding document", e);
+                    }
+                });
+
     }
 }
 

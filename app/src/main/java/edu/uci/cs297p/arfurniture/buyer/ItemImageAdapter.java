@@ -39,6 +39,7 @@ public class ItemImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
+        if (mImageUrls == null) return 0;
         return mImageUrls.size();
     }
 
