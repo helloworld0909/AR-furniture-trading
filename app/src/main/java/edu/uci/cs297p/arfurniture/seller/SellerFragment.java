@@ -19,7 +19,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,14 +47,14 @@ public class SellerFragment extends Fragment implements PostItemListener {
             @Item.Category final int category = i;
             cardView.setOnClickListener(clickedView -> {
                 mArgs.putInt("category", category);
-                showPostItemDialog();
+                showPostItemDialog(category);
             });
 
         }
     }
 
-    private void showPostItemDialog() {
-        PostItemFragment postItemFragment = new PostItemFragment();
+    private void showPostItemDialog(@Item.Category int category) {
+        PostItemFragment postItemFragment = new PostItemFragment(getContext(), category);
         // SETS the target fragment for use later when sending results
         postItemFragment.setTargetFragment(SellerFragment.this, 300);
         postItemFragment.show(getFragmentManager(), "fragment_edit_name");
@@ -70,9 +69,7 @@ public class SellerFragment extends Fragment implements PostItemListener {
         // TODO: Add imageURLs and AR model attributes
         Map<String, Object> itemData = new HashMap<>();
         Set<String> ks = mArgs.keySet();
-        Iterator<String> iterator = ks.iterator();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
+        for (String key : ks) {
             itemData.put(key, mArgs.get(key));
         }
 

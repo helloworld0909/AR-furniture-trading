@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">AR Furniture</string>
     <string name="ar_activity_name">Preview</string>
+    <string name="sceneview_activity_name">Model Preview</string>
     <string name="buyer_fragment_name">Buy</string>
     <string name="seller_fragment_name">Sell</string>
     <string name="ar_button_content_description">AR Preview</string>
@@ -20,6 +21,8 @@
     <string name="item_name_label">Name</string>
     <string name="item_description_label">Description</string>
     <string name="item_price_label">Price</string>
+    <string name="ar_support_checkbox_text">Add AR Support</string>
+    <string name="ar_support_button_text">Launch AR</string>
     <string name="submit">Submit</string>
     <string name="ar_support_label">Add AR Preview</string>
     <string name="ar_color_button">Choose Color</string>

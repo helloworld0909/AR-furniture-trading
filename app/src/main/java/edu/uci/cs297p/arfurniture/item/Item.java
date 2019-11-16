@@ -29,7 +29,9 @@ public class Item implements Serializable {
     public static final int BED = 2;
     public static final int SOFA = 3;
     public static final int STORAGE = 4;
-    public static final int OTHER = Integer.MAX_VALUE;
+    public static final int OTHER = 5;
+
+    private static final String[] CATEGORY_STRINGS = new String[]{"table", "chair", "bed", "sofa", "storage", "other"};
 
     public Item(String itemId, String name, String description, String price, @Category int category) {
         this.itemId = itemId;
@@ -75,5 +77,9 @@ public class Item implements Serializable {
 
     public boolean isPreviewable() {
         return previewable;
+    }
+
+    public static String categoryToStr(@Category int category) {
+        return CATEGORY_STRINGS[category];
     }
 }

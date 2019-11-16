@@ -53,11 +53,11 @@ apply plugin: 'com.google.ar.sceneform.plugin'
 sceneform.asset('sampledata/chair_0/Chair_HighBack_OBJ.obj',
         'default',
         'sampledata/chair_0/Chair_HighBack_OBJ.sfa',
-        'src/main/res/raw/chair_0')
+        'src/main/assets/chair/chair_0')
 
 sceneform.asset('sampledata/table_0/stolic.obj',
         'default',
         'sampledata/table_0/stolic.sfa',
-        'src/main/res/raw/table_0')
+        'src/main/assets/table/table_0')
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

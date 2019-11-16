@@ -1,6 +1,5 @@
 package edu.uci.cs297p.arfurniture.ar;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
@@ -73,6 +72,7 @@ public class ItemNode extends TransformableNode implements Node.OnTapListener {
                                 Toast.makeText(context, "Color: " + envelope.toString(), Toast.LENGTH_LONG).show();
 
                                 MaterialFactory.makeOpaqueWithColor(context, new Color(envelope.getColor())).thenAccept(material -> {
+                                    //TODO: Allow user to adjust other material properties
                                     getRenderable().setMaterial(material);
                                 });
 
