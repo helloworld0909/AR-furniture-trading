@@ -4,9 +4,24 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp">
 
-    <TextView
-        android:id="@+id/model_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/model_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:contentDescription="@string/model_image_content_description" />
+
+        <Button
+            android:id="@+id/model_preview_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/model_preview_button_text"
+            android:textSize="12sp" />
+    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

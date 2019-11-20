@@ -13,14 +13,23 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.IntDef;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.math.Vector3;
+import com.google.ar.sceneform.rendering.Color;
+import com.google.ar.sceneform.rendering.MaterialFactory;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.TransformableNode;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
 import edu.uci.cs297p.arfurniture.ar.ItemNode;
 import edu.uci.cs297p.arfurniture.item.Item;
@@ -32,8 +41,20 @@ public class ARActivity extends AppCompatActivity {
 
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
+    private View mMenuView;
 
-    public static String ITEM_KEY = "item";
+
+    @IntDef({BUYER, SELLER})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Flag {
+    }
+
+    public static final int BUYER = 0;
+    public static final int SELLER = 1;
+
+    public static final String ITEM_KEY = "item";
+    public static final String URI_KEY = "uri";
+    public static final String FLAG_KEY = "flag";
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -47,15 +68,64 @@ public class ARActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.ar);
-        View menuView = findViewById(R.id.item_menu);
-        menuView.setVisibility(View.GONE);
-
+        mMenuView = findViewById(R.id.item_menu);
+        mMenuView.setVisibility(View.GONE);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
+        // Launch buyer AR by default
+        @Flag int flag = getIntent().getIntExtra(FLAG_KEY, BUYER);
+        if (flag == SELLER) {
+            setupSeller();
+        } else {
+            setupBuyer();
+        }
+    }
+
+    private void setupSeller() {
+
+        Uri uri = getIntent().getParcelableExtra(URI_KEY);
+
+        ModelRenderable.builder()
+                .setSource(this, uri)
+                .build()
+                .thenAccept(renderable -> modelRenderable = renderable)
+                .exceptionally(
+                        throwable -> {
+                            Toast toast =
+                                    Toast.makeText(this, "Unable to load renderable " + uri.getLastPathSegment(), Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            return null;
+                        });
+
+        arFragment.setOnTapArPlaneListener(
+                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                    if (modelRenderable == null) {
+                        return;
+                    }
+
+                    // Create the Anchor.
+                    Anchor anchor = hitResult.createAnchor();
+                    AnchorNode anchorNode = new AnchorNode(anchor);
+                    anchorNode.setParent(arFragment.getArSceneView().getScene());
+
+                    // Create the transformable and add it to the anchor.
+
+                    ItemNode node = new ItemNode(this, mMenuView, arFragment.getTransformationSystem());
+                    node.setParent(anchorNode);
+                    node.setRenderable(modelRenderable);
+                    node.select();
+
+                    mMenuView.setVisibility(View.VISIBLE);
+                });
+    }
+
+    private void setupBuyer() {
         Item item = (Item) getIntent().getSerializableExtra(ITEM_KEY);
         if (item.getModelName() == null) {
             throw new IllegalArgumentException("Item does not support AR");
         }
+
         String modelName = item.getModelName();
 
         // When you build a Renderable, Sceneform loads its resources in the background while returning
@@ -63,7 +133,13 @@ public class ARActivity extends AppCompatActivity {
         ModelRenderable.builder()
                 .setSource(this, Uri.parse("file:///android_asset/" + Item.categoryToStr(item.getCategory()) + "/" + modelName))
                 .build()
-                .thenAccept(renderable -> modelRenderable = renderable)
+                .thenAccept(renderable -> {
+                    modelRenderable = renderable;
+                    if (item.getColor() != null) {
+                        int color = item.getColor();
+                        MaterialFactory.makeOpaqueWithColor(this, new Color(color)).thenAccept(material -> modelRenderable.setMaterial(material));
+                    }
+                })
                 .exceptionally(
                         throwable -> {
                             Toast toast =
@@ -85,12 +161,17 @@ public class ARActivity extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
 
                     // Create the transformable and add it to the anchor.
-                    ItemNode node = new ItemNode(this, menuView, arFragment.getTransformationSystem());
+
+                    TransformableNode node = new TransformableNode(arFragment.getTransformationSystem());
                     node.setParent(anchorNode);
                     node.setRenderable(modelRenderable);
-                    node.select();
 
-                    menuView.setVisibility(View.VISIBLE);
+                    List<Double> scale = item.getScale();
+                    if (scale != null) {
+                        node.setLocalScale(new Vector3(scale.get(0).floatValue(), scale.get(1).floatValue(), scale.get(2).floatValue()));
+                    }
+                    node.getScaleController().setEnabled(false);
+                    node.select();
                 });
     }
 

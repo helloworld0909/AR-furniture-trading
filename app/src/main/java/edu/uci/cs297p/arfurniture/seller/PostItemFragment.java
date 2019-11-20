@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import edu.uci.cs297p.arfurniture.ARActivity;
 import edu.uci.cs297p.arfurniture.R;
 import edu.uci.cs297p.arfurniture.item.Item;
 
@@ -25,6 +26,12 @@ public class PostItemFragment extends DialogFragment {
     private View mRootView;
     @Item.Category
     private final int mCategory;
+
+    private Bundle arBundle = new Bundle();
+
+    public static final int REQUEST_CODE = 0;
+    public static final String SCALE_KEY = "scale";
+    public static final String COLOR_KEY = "color";
 
     public PostItemFragment(Context context, @Item.Category int category) {
         mContext = context;
@@ -42,9 +49,6 @@ public class PostItemFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         mRootView = view;
 
-        Button button = mRootView.findViewById(R.id.submit_button);
-        button.setOnClickListener((clickedView) -> submit());
-
         setArVisibility(View.GONE);
 
         CheckBox checkBox = mRootView.findViewById(R.id.ar_support_checkbox);
@@ -57,13 +61,28 @@ public class PostItemFragment extends DialogFragment {
         });
 
         RecyclerView modelGallery = mRootView.findViewById(R.id.model_gallery);
-        modelGallery.setAdapter(new ModelAdapter(mContext, mCategory, uri -> {
+        ModelAdapter modelAdapter = new ModelAdapter(mContext, mCategory, uri -> {
             Bundle args = new Bundle();
             args.putParcelable("uri", uri);
             Intent intent = new Intent(mContext, SceneViewActivity.class);
             intent.putExtras(args);
             startActivity(intent);
-        }));
+        });
+        modelGallery.setAdapter(modelAdapter);
+
+        Button arButton = mRootView.findViewById(R.id.ar_support_button);
+        arButton.setOnClickListener(clickedView -> {
+            Intent intent = new Intent(mContext, ARActivity.class);
+            intent.putExtra(ARActivity.FLAG_KEY, ARActivity.SELLER);
+            intent.putExtra(ARActivity.URI_KEY, modelAdapter.getSelectedUri());
+            startActivityForResult(intent, REQUEST_CODE);
+        });
+
+        Button submitButton = mRootView.findViewById(R.id.submit_button);
+        submitButton.setOnClickListener((clickedView) -> {
+            arBundle.putString("modelName", modelAdapter.getSelectedModelName());
+            submit();
+        });
     }
 
     @Override
@@ -80,6 +99,15 @@ public class PostItemFragment extends DialogFragment {
         args.putString("description", ((TextView) mRootView.findViewById(R.id.item_description_text)).getText().toString());
         args.putString("price", ((TextView) mRootView.findViewById(R.id.item_price_text)).getText().toString());
 
+        if (arBundle.containsKey(SCALE_KEY)) {
+            args.putString("modelName", arBundle.getString("modelName"));
+            args.putFloatArray(SCALE_KEY, arBundle.getFloatArray(SCALE_KEY));
+        }
+
+        if (arBundle.containsKey(COLOR_KEY)) {
+            args.putInt(COLOR_KEY, arBundle.getInt(COLOR_KEY));
+        }
+
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         PostItemListener listener = (PostItemListener) getTargetFragment();
         listener.onSubmit(args);
@@ -91,4 +119,18 @@ public class PostItemFragment extends DialogFragment {
         mRootView.findViewById(R.id.ar_support_button).setVisibility(visibility);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            if (data.hasExtra(SCALE_KEY)) {
+                float[] scale = data.getFloatArrayExtra(SCALE_KEY);
+                arBundle.putFloatArray(SCALE_KEY, scale);
+            }
+
+            if (data.hasExtra(COLOR_KEY)) {
+                arBundle.putInt(COLOR_KEY, data.getIntExtra(COLOR_KEY, 0));
+            }
+        }
+    }
 }

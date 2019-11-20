@@ -1,10 +1,12 @@
 package edu.uci.cs297p.arfurniture.ar;
 
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
@@ -18,16 +20,20 @@ import com.skydoves.colorpickerview.ColorPickerDialog;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
 import edu.uci.cs297p.arfurniture.R;
+import edu.uci.cs297p.arfurniture.seller.PostItemFragment;
 
 public class ItemNode extends TransformableNode implements Node.OnTapListener {
 
 
     private View menuView;
-    private final Context context;
 
-    public ItemNode(Context context, View menuView, TransformationSystem transformationSystem) {
+    private final AppCompatActivity activity;
+
+    private Integer color;
+
+    public ItemNode(AppCompatActivity activity, View menuView, TransformationSystem transformationSystem) {
         super(transformationSystem);
-        this.context = context;
+        this.activity = activity;
         this.menuView = menuView;
     }
 
@@ -45,12 +51,21 @@ public class ItemNode extends TransformableNode implements Node.OnTapListener {
         Button ok_button = menuView.findViewById(R.id.ok_button);
         ok_button.setOnClickListener(view -> {
             Vector3 scale = getTranslationController().getTransformableNode().getLocalScale();
-            Toast.makeText(context, "Scale: " + scale.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "Scale: " + scale.toString(), Toast.LENGTH_LONG).show();
+
+            Intent intentWithResult = new Intent();
+            intentWithResult.putExtra(PostItemFragment.SCALE_KEY, new float[]{scale.x, scale.y, scale.z});
+            if (color != null) {
+                intentWithResult.putExtra(PostItemFragment.COLOR_KEY, color);
+            }
+            activity.setResult(PostItemFragment.REQUEST_CODE, intentWithResult);
+            activity.finish();
         });
 
         Button cancel_button = menuView.findViewById(R.id.cancel_button);
         cancel_button.setOnClickListener(view -> {
             getParent().removeChild(this);
+            color = null;
             menuView.setVisibility(View.GONE);
         });
     }
@@ -61,24 +76,26 @@ public class ItemNode extends TransformableNode implements Node.OnTapListener {
     }
 
     private void showColorPicker() {
-        new ColorPickerDialog.Builder(context)
+        new ColorPickerDialog.Builder(activity)
                 .setTitle("ColorPicker Dialog")
                 .setPreferenceName("MyColorPickerDialog")
-                .setPositiveButton(context.getString(android.R.string.ok),
+                .setPositiveButton(activity.getString(android.R.string.ok),
                         new ColorEnvelopeListener() {
                             @Override
                             public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
 
-                                Toast.makeText(context, "Color: " + envelope.toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity, "Color: " + envelope.toString(), Toast.LENGTH_LONG).show();
 
-                                MaterialFactory.makeOpaqueWithColor(context, new Color(envelope.getColor())).thenAccept(material -> {
+                                MaterialFactory.makeOpaqueWithColor(activity, new Color(envelope.getColor())).thenAccept(material -> {
                                     //TODO: Allow user to adjust other material properties
                                     getRenderable().setMaterial(material);
                                 });
 
+                                color = envelope.getColor();
+
                             }
                         })
-                .setNegativeButton(context.getString(android.R.string.cancel),
+                .setNegativeButton(activity.getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

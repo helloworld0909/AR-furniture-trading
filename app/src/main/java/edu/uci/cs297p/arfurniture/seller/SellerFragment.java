@@ -18,9 +18,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import edu.uci.cs297p.arfurniture.R;
 import edu.uci.cs297p.arfurniture.item.Item;
@@ -68,9 +69,19 @@ public class SellerFragment extends Fragment implements PostItemListener {
         // Post item to the backend
         // TODO: Add imageURLs and AR model attributes
         Map<String, Object> itemData = new HashMap<>();
-        Set<String> ks = mArgs.keySet();
-        for (String key : ks) {
-            itemData.put(key, mArgs.get(key));
+        for (String key : mArgs.keySet()) {
+            if (PostItemFragment.SCALE_KEY.equals(key)) {
+                float[] data = mArgs.getFloatArray(key);
+                if (data != null && data.length == 3) {
+                    List<Double> scale = new ArrayList<>();
+                    scale.add((double) data[0]);
+                    scale.add((double) data[1]);
+                    scale.add((double) data[2]);
+                    itemData.put(key, scale);
+                }
+            } else {
+                itemData.put(key, mArgs.get(key));
+            }
         }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();

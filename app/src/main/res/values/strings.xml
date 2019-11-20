@@ -27,4 +27,7 @@
     <string name="ar_support_label">Add AR Preview</string>
     <string name="ar_color_button">Choose Color</string>
 
+    <string name="model_image_content_description">Model Thumbnail</string>
+    <string name="model_preview_button_text">Check the model</string>
+
 </resources>

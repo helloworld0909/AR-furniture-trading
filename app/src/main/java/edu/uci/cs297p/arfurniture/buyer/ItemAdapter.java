@@ -3,14 +3,15 @@ package edu.uci.cs297p.arfurniture.buyer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -79,6 +80,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
     private Intent createIntent(Item item) {
         Bundle params = new Bundle();
+        params.putInt(ARActivity.FLAG_KEY, ARActivity.BUYER);
         params.putSerializable(ARActivity.ITEM_KEY, item);
         Intent intent = new Intent(mContext, ARActivity.class);
         intent.putExtras(params);

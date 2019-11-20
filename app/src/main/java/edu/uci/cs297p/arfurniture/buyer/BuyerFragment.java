@@ -1,15 +1,14 @@
 package edu.uci.cs297p.arfurniture.buyer;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,6 +21,7 @@ import java.util.List;
 
 import edu.uci.cs297p.arfurniture.R;
 import edu.uci.cs297p.arfurniture.item.Item;
+import edu.uci.cs297p.arfurniture.seller.PostItemFragment;
 
 
 public class BuyerFragment extends Fragment {
@@ -78,12 +78,27 @@ public class BuyerFragment extends Fragment {
     private Item constructItem(QueryDocumentSnapshot document) {
         Item item = new Item(document.getId(), document.get("name").toString(),
                 document.get("description").toString(), document.get("price").toString(), Integer.valueOf(document.get("category").toString()));
-        if (document.get("imageURLs") != null) {
+        if (document.contains("imageURLs")) {
             item.setImageUrls((List<String>) document.get("imageURLs"));
         }
-        if (document.get("modelName") != null) {
+        if (document.contains("modelName")) {
             item.setModelName(document.get("modelName").toString());
         }
+
+        if (document.contains(PostItemFragment.SCALE_KEY)) {
+            final List<Double> scale = (List<Double>) document.get(PostItemFragment.SCALE_KEY);
+            if (scale != null && scale.size() == 3) {
+                item.setScale(scale);
+            } else {
+                throw new IllegalArgumentException("Scale data is wrong");
+            }
+        }
+
+        if (document.contains(PostItemFragment.COLOR_KEY)) {
+            final long color = (long) document.get(PostItemFragment.COLOR_KEY);
+            item.setColor((int) color);
+        }
+
         return item;
     }
 }

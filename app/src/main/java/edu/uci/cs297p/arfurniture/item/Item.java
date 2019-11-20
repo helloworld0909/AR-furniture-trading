@@ -14,6 +14,8 @@ public class Item implements Serializable {
     private String modelName;
     private String price;
     private List<String> imageUrls;
+    private List<Double> scale;
+    private Integer color;
     private boolean previewable;
 
     @Category
@@ -50,6 +52,14 @@ public class Item implements Serializable {
         this.imageUrls = imageUrls;
     }
 
+    public void setScale(List<Double> scale) {
+        this.scale = scale;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
     public String getName() {
         return name;
     }
@@ -73,6 +83,14 @@ public class Item implements Serializable {
     @Category
     public int getCategory() {
         return category;
+    }
+
+    public List<Double> getScale() {
+        return scale;
+    }
+
+    public Integer getColor() {
+        return color;
     }
 
     public boolean isPreviewable() {
