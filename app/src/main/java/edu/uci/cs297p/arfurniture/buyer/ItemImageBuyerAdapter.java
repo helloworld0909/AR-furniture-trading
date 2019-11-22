@@ -15,12 +15,12 @@ import java.util.List;
 
 import edu.uci.cs297p.arfurniture.R;
 
-public class ItemImageAdapter extends PagerAdapter {
+public class ItemImageBuyerAdapter extends PagerAdapter {
 
     private Context mContext;
     private List<String> mImageUrls;
 
-    public ItemImageAdapter(Context context, List<String> imageUrls) {
+    public ItemImageBuyerAdapter(Context context, List<String> imageUrls) {
         mContext = context;
         mImageUrls = imageUrls;
     }
@@ -30,7 +30,7 @@ public class ItemImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Log.i("lz", "Load " + position);
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_image, container, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_image_buyer, container, false);
         ImageView imageView = view.findViewById(R.id.image);
         Picasso.with(mContext).load(mImageUrls.get(position)).into(imageView);
         container.addView(view);

@@ -59,7 +59,7 @@ public class ItemFragment extends Fragment {
             arButton.setVisibility(View.GONE);
         }
 
-        ItemImageAdapter adapter = new ItemImageAdapter(getContext(), item.getImageUrls());
+        ItemImageBuyerAdapter adapter = new ItemImageBuyerAdapter(getContext(), item.getImageUrls());
 
         ViewPager viewPager = rootView.findViewById(R.id.image_list);
         viewPager.setAdapter(adapter);

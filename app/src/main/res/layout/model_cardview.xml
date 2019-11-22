@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,12 +15,15 @@
             android:id="@+id/model_image"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/model_image_content_description" />
 
         <Button
             android:id="@+id/model_preview_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/model_preview_button_text"
             android:textSize="12sp" />
     </LinearLayout>

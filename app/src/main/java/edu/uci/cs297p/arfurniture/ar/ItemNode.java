@@ -58,7 +58,7 @@ public class ItemNode extends TransformableNode implements Node.OnTapListener {
             if (color != null) {
                 intentWithResult.putExtra(PostItemFragment.COLOR_KEY, color);
             }
-            activity.setResult(PostItemFragment.REQUEST_CODE, intentWithResult);
+            activity.setResult(PostItemFragment.AR_REQUEST_CODE, intentWithResult);
             activity.finish();
         });
 

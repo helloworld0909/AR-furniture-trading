@@ -1,5 +1,7 @@
 package edu.uci.cs297p.arfurniture.seller;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +15,15 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,12 +70,17 @@ public class SellerFragment extends Fragment implements PostItemListener {
     @Override
     public void onSubmit(Bundle args) {
         mArgs.putAll(args);
-        Toast.makeText(getContext(), mArgs.toString(), Toast.LENGTH_LONG).show();
+        Log.d("SellerFragment", "onSubmit " + mArgs.toString());
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        List<Task<Uri>> uploadTasks = new ArrayList<>();
+        List<String> imageUrlList = new ArrayList<>();
 
         // Post item to the backend
         // TODO: Add imageURLs and AR model attributes
         Map<String, Object> itemData = new HashMap<>();
         for (String key : mArgs.keySet()) {
+            // Handle scale vector
             if (PostItemFragment.SCALE_KEY.equals(key)) {
                 float[] data = mArgs.getFloatArray(key);
                 if (data != null && data.length == 3) {
@@ -79,27 +90,63 @@ public class SellerFragment extends Fragment implements PostItemListener {
                     scale.add((double) data[2]);
                     itemData.put(key, scale);
                 }
+            }
+            // Upload picture list
+            else if (PostItemFragment.PICTURE_KEY.equals(key)) {
+                List<Bitmap> pictureList = mArgs.getParcelableArrayList(key);
+
+                for (Bitmap bitmap : pictureList) {
+
+                    StorageReference ref = storageRef.child(System.nanoTime() + Integer.toHexString(hashCode()) + ".jpg");
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
+
+                    UploadTask uploadTask = ref.putBytes(data);
+                    uploadTask.addOnFailureListener(
+                            exception -> Log.d("SellerFragment", "Uploading picture failed " + bitmap.toString())
+                    ).addOnSuccessListener(
+                            taskSnapshot -> Log.d("SellerFragment", "Uploading picture succeed " + bitmap.toString())
+                    );
+
+                    Task<Uri> uriTask = uploadTask.continueWithTask((Task<UploadTask.TaskSnapshot> task) -> {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        // Continue with the task to get the download URL
+                        return ref.getDownloadUrl();
+
+                    }).addOnCompleteListener((Task<Uri> task) -> {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            imageUrlList.add(downloadUri.toString());
+                        }
+                    });
+
+                    uploadTasks.add(uriTask);
+
+                }
+                itemData.put("imageURLs", imageUrlList);
             } else {
                 itemData.put(key, mArgs.get(key));
             }
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("items")
-                .add(itemData)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("TEST", "DocumentSnapshot written with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TEST", "Error adding document", e);
-                    }
-                });
+        Tasks.whenAllComplete(uploadTasks).addOnCompleteListener((task) -> {
 
+            Toast.makeText(getContext(), "Uploaded " + imageUrlList.size() + " images", Toast.LENGTH_SHORT).show();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("items")
+                    .add(itemData)
+                    .addOnSuccessListener((DocumentReference documentReference) ->
+                            Log.d("SellerFragment", "DocumentSnapshot written with ID: " + documentReference.getId())
+                    )
+                    .addOnFailureListener((@NonNull Exception e) ->
+                            Log.e("SellerFragment", "Error adding document", e)
+                    );
+        });
     }
 }
 

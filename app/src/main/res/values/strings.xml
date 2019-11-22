@@ -6,7 +6,7 @@
     <string name="buyer_fragment_name">Buy</string>
     <string name="seller_fragment_name">Sell</string>
     <string name="ar_button_content_description">AR Preview</string>
-    <string name="item_image_content_description">Item Image</string>
+    <string name="item_image_buyer_content_description">Item Image</string>
 
     <string name="seller_fragment_title">Choose your furniture</string>
     <string name="category_icon_content_description">Category Icon</string>
@@ -25,9 +25,11 @@
     <string name="ar_support_button_text">Launch AR</string>
     <string name="submit">Submit</string>
     <string name="ar_support_label">Add AR Preview</string>
-    <string name="ar_color_button">Choose Color</string>
+    <string name="ar_color_button_text">Choose Color</string>
+    <string name="take_picture_button_text">Take Pictures</string>
 
+    <string name="item_image_seller_content_description">Item Image</string>
     <string name="model_image_content_description">Model Thumbnail</string>
-    <string name="model_preview_button_text">Check the model</string>
+    <string name="model_preview_button_text">Check this model</string>
 
 </resources>

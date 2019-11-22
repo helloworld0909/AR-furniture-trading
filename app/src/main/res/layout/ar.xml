@@ -27,7 +27,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="6dp"
-            android:text="@string/ar_color_button"
+            android:text="@string/ar_color_button_text"
             android:textAlignment="center" />
 
         <Button
