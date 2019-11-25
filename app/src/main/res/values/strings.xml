@@ -32,4 +32,11 @@
     <string name="model_image_content_description">Model Thumbnail</string>
     <string name="model_preview_button_text">Check this model</string>
 
+    <string name="SignIn">Sign In</string>
+    <string name="SignUp">Sign Up</string>
+    <string name="Email">"Enter email account"</string>
+    <string name="Password">"Enter password"</string>
+    <string name="SignUpLink">"New User? Register Here"</string>
+    <string name="SignInLink">"Already have an account? Sign in Here"</string>
+
 </resources>

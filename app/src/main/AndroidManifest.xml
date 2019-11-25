@@ -2,16 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="edu.uci.cs297p.arfurniture">
-
     <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Always needed for AR. -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Always needed for AR. -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <!--
  This tag indicates that this application requires ARCore. This results in the application
         only being visible in the Google Play Store on devices that support ARCore.
@@ -19,7 +14,6 @@
     <uses-feature
         android:name="android.hardware.camera.ar"
         android:required="true" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -31,7 +25,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".LoginInActivity" />
+        <activity android:name=".HomeActivity" />
         <!--
              This tag indicates that this application requires ARCore. This results in the
             application only being visible in the Google Play Store on devices that support
