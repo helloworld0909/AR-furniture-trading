@@ -21,7 +21,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yigitserin.currencyedittext.CurrencyEditText;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 import edu.uci.cs297p.arfurniture.ARActivity;
 import edu.uci.cs297p.arfurniture.R;
@@ -64,6 +67,9 @@ public class PostItemFragment extends DialogFragment {
         mRootView = view;
 
         setArVisibility(View.GONE);
+
+        CurrencyEditText priceEditText = mRootView.findViewById(R.id.item_price_text);
+        priceEditText.setLocale(Locale.US);
 
         RecyclerView pictureListView = mRootView.findViewById(R.id.picture_list);
         mPictureListViewAdapter = new ItemImageSellerAdapter(mContext, mPictureList);

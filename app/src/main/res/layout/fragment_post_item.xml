@@ -21,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="text"
+        android:labelFor="@id/item_name_label" />
 
     <TextView
         android:id="@+id/item_description_label"
@@ -34,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="text"
+        android:labelFor="@id/item_description_label" />
 
     <TextView
         android:id="@+id/item_price_label"
@@ -42,12 +44,10 @@
         android:layout_height="wrap_content"
         android:text="@string/item_price_label" />
 
-    <EditText
+    <com.yigitserin.currencyedittext.CurrencyEditText
         android:id="@+id/item_price_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/picture_list"
