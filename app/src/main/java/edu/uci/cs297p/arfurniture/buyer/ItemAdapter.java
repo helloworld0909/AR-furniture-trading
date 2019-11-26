@@ -99,6 +99,10 @@ public class ItemAdapter extends RecyclerView.Adapter implements SwipeRefreshLay
     }
 
     public void refresh() {
+        refresh(null);
+    }
+
+    public void refresh(@Item.Category Integer category) {
         Log.d("ItemAdapter", "refresh");
 
         mRefreshedListener.onRefreshStart();
@@ -109,7 +113,12 @@ public class ItemAdapter extends RecyclerView.Adapter implements SwipeRefreshLay
         mDataSet.clear();
 
         // Create a query against the collection.
-        Task<QuerySnapshot> query = itemsRef.get();
+        Task<QuerySnapshot> query;
+        if (category != null) {
+            query = itemsRef.whereEqualTo("category", category).get();
+        } else {
+            query = itemsRef.get();
+        }
         query.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {

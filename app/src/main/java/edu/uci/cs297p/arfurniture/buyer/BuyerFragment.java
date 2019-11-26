@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,9 @@ import edu.uci.cs297p.arfurniture.item.Item;
 
 
 public class BuyerFragment extends Fragment {
+
+    @Item.Category
+    private Integer mCategory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
@@ -67,8 +73,29 @@ public class BuyerFragment extends Fragment {
                 }
         );
 
+        Spinner spinner = view.findViewById(R.id.category_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.category_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final int idx = parent.getSelectedItemPosition();
+                if (idx == 0) {
+                    mCategory = null;
+                } else {
+                    mCategory = idx - 1;
+                }
+                itemAdapter.refresh(mCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         swipeLayout.setOnRefreshListener(itemAdapter);
         itemRecyclerView.setAdapter(itemAdapter);
-        itemAdapter.refresh();
     }
 }

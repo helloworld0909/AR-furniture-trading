@@ -11,6 +11,7 @@
     <string name="seller_fragment_title">Choose your furniture</string>
     <string name="category_icon_content_description">Category Icon</string>
 
+    <string name="all">All</string>
     <string name="table">Table</string>
     <string name="chair">Chair</string>
     <string name="bed">Bed</string>
@@ -38,5 +39,15 @@
     <string name="Password">"Enter password"</string>
     <string name="SignUpLink">"New User? Register Here"</string>
     <string name="SignInLink">"Already have an account? Sign in Here"</string>
+
+    <string-array name="category_array">
+        <item>@string/all</item>
+        <item>@string/table</item>
+        <item>@string/chair</item>
+        <item>@string/bed</item>
+        <item>@string/sofa</item>
+        <item>@string/cabinet</item>
+        <item>@string/others</item>
+    </string-array>
 
 </resources>
