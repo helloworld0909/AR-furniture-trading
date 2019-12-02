@@ -1,0 +1,105 @@
+{
+  materials: [
+    {
+      name: 'VEA108AC_01',
+      parameters: [
+        {
+          baseColor: null,
+        },
+        {
+          baseColorTint: [
+            0.062700000000000006,
+            0.062700000000000006,
+            0.062700000000000006,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.39223200000000003,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'wire_028089177',
+      parameters: [
+        {
+          baseColor: null,
+        },
+        {
+          baseColorTint: [
+            0.10979999999999999,
+            0.34899999999999998,
+            0.69410000000000005,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.242536,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'VEA108AC_03',
+      parameters: [
+        {
+          baseColor: null,
+        },
+        {
+          baseColorTint: [
+            0.035299999999999998,
+            0.035299999999999998,
+            0.035299999999999998,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.408248,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/chair_1/Vitra EA 108 Aluminium Chair_OBJ.obj',
+    name: 'Vitra EA 108 Aluminium Chair_OBJ',
+    recenter: 'root',
+    scale: 0.017329000000000001,
+  },
+  samplers: [
+    {
+      file: 'sampledata/chair_1/Textures/VE108AC_B.jpg',
+      name: 'VE108AC_B',
+      params: {
+        usage_type: 'Data',
+      },
+      pipeline_name: 'E:\\3d\\chair\\Vitra EA 108 Aluminium Chair\\max\\Textures\\VE108AC_B.jpg',
+    },
+  ],
+  version: '0.54:2',
+}

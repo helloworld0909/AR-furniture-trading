@@ -64,3 +64,44 @@ sceneform.asset('sampledata/table_0/stolic.obj',
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
 
+
+
+sceneform.asset('sampledata/chair_1/Vitra EA 108 Aluminium Chair_OBJ.obj',
+        'default',
+        'sampledata/chair_1/Vitra EA 108 Aluminium Chair_OBJ.sfa',
+        'src/main/assets/chair/chair_1')
+
+sceneform.asset('sampledata/table_1/Desk1_Polygon.obj',
+        'default',
+        'sampledata/table_1/Desk1_Polygon.sfa',
+        'src/main/assets/table/table_1')
+
+sceneform.asset('sampledata/bed_0/Full_Size_Bed_with_White_Sheets_Black_V1.obj',
+        'default',
+        'sampledata/bed_0/Full_Size_Bed_with_White_Sheets_Black_V1.sfa',
+        'src/main/assets/bed/bed_0')
+
+sceneform.asset('sampledata/bed_1/ikea_malm_obj.obj',
+        'default',
+        'sampledata/bed_1/ikea_malm_obj.sfa',
+        'src/main/assets/bed/bed_1')
+
+sceneform.asset('sampledata/sofa_0/sofa 3 plazas obj.obj',
+        'default',
+        'sampledata/sofa_0/sofa 3 plazas obj.sfa',
+        'src/main/assets/sofa/sofa_0')
+
+sceneform.asset('sampledata/sofa_1/Sofa GM Plutone_OBJ.obj',
+        'default',
+        'sampledata/sofa_1/Sofa GM Plutone_OBJ.sfa',
+        'src/main/assets/sofa/sofa_1')
+
+sceneform.asset('sampledata/storage_0/hsrcbntccfr.blend.obj',
+        'default',
+        'sampledata/storage_0/hsrcbntccfr.blend.sfa',
+        'src/main/assets/storage/storage_0')
+
+sceneform.asset('sampledata/storage_1/wrldfurfre.obj',
+        'default',
+        'sampledata/storage_1/wrldfurfre.sfa',
+        'src/main/assets/storage/storage_1')

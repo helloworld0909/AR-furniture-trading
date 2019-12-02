@@ -1,0 +1,43 @@
+{
+  materials: [
+    {
+      name: 'wire_006135006',
+      parameters: [
+        {
+          baseColor: null,
+        },
+        {
+          baseColorTint: [
+            0.0235,
+            0.52939999999999998,
+            0.0235,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.242536,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/sofa_0/sofa 3 plazas obj.obj',
+    name: 'sofa 3 plazas obj',
+    recenter: 'root',
+    scale: 0.011276,
+  },
+  version: '0.54:2',
+}
