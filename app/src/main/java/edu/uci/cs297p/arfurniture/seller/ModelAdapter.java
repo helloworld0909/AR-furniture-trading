@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ public class ModelAdapter extends RecyclerView.Adapter {
     private List<Uri> mUriList = new ArrayList<>();
     private OnModelClickListener mListener;
 
-    private View mPreviewButton;
     private int mSelectedPos = RecyclerView.NO_POSITION;
 
     public ModelAdapter(Context context, @Item.Category int category, OnModelClickListener listener) {
@@ -51,7 +51,6 @@ public class ModelAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(mContext).inflate(R.layout.model_cardview, parent, false);
-        mPreviewButton = cardView.findViewById(R.id.model_preview_button);
 
         return new RecyclerView.ViewHolder(cardView) {
         };
@@ -68,19 +67,20 @@ public class ModelAdapter extends RecyclerView.Adapter {
             modelImageView.setImageDrawable(mContext.getDrawable(resourceId));
         }
 
-        mPreviewButton.setOnClickListener(view -> mListener.onModelClick(uri));
+        Button previewButton = holder.itemView.findViewById(R.id.model_preview_button);
+
+        previewButton.setOnClickListener(view -> mListener.onModelClick(uri));
 
         if (mSelectedPos != position) {
-            mPreviewButton.setVisibility(View.GONE);
+            previewButton.setVisibility(View.GONE);
+            holder.itemView.setBackground(null);
         }
 
         holder.itemView.setOnClickListener(view -> {
-            mPreviewButton.setVisibility(View.VISIBLE);
-            if (mSelectedPos != RecyclerView.NO_POSITION && mSelectedPos != position) {
-                notifyItemChanged(mSelectedPos);
-            }
-            mSelectedPos = position;
+            previewButton.setVisibility(View.VISIBLE);
             view.setBackgroundResource(R.color.slate_blue);
+            mSelectedPos = position;
+            notifyDataSetChanged();
         });
     }
 

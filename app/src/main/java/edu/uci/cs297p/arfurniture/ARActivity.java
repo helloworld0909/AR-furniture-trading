@@ -114,6 +114,8 @@ public class ARActivity extends AppCompatActivity {
                     ItemNode node = new ItemNode(this, mMenuView, arFragment.getTransformationSystem());
                     node.setParent(anchorNode);
                     node.setRenderable(modelRenderable);
+                    node.getScaleController().setMinScale(0.333f);
+                    node.getScaleController().setMaxScale(3.0f);
                     node.select();
 
                     mMenuView.setVisibility(View.VISIBLE);
