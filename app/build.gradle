@@ -105,3 +105,8 @@ sceneform.asset('sampledata/storage_1/wrldfurfre.obj',
         'default',
         'sampledata/storage_1/wrldfurfre.sfa',
         'src/main/assets/storage/storage_1')
+
+sceneform.asset('sampledata/chair_2/Codutti_Genesis_chair.FBX',
+        'default',
+        'sampledata/chair_2/Codutti_Genesis_chair.sfa',
+        'src/main/assets/chair/chair_2')

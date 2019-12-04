@@ -34,8 +34,6 @@ import edu.uci.cs297p.arfurniture.item.Item;
 
 public class SellerFragment extends Fragment implements PostItemListener {
 
-    private Bundle mArgs;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_seller, viewGroup, false);
@@ -45,15 +43,12 @@ public class SellerFragment extends Fragment implements PostItemListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mArgs = new Bundle();
-
         GridLayout gridLayout = view.findViewById(R.id.seller_category_grid);
 
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             CardView cardView = (CardView) gridLayout.getChildAt(i);
             @Item.Category final int category = i;
             cardView.setOnClickListener(clickedView -> {
-                mArgs.putInt("category", category);
                 showPostItemDialog(category);
             });
 
@@ -69,20 +64,18 @@ public class SellerFragment extends Fragment implements PostItemListener {
 
     @Override
     public void onSubmit(Bundle args) {
-        mArgs.putAll(args);
-        Log.d("SellerFragment", "onSubmit " + mArgs.toString());
+        Log.d("SellerFragment", "onSubmit " + args.toString());
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         List<Task<Uri>> uploadTasks = new ArrayList<>();
         List<String> imageUrlList = new ArrayList<>();
 
         // Post item to the backend
-        // TODO: Add imageURLs and AR model attributes
         Map<String, Object> itemData = new HashMap<>();
-        for (String key : mArgs.keySet()) {
+        for (String key : args.keySet()) {
             // Handle scale vector
             if (PostItemFragment.SCALE_KEY.equals(key)) {
-                float[] data = mArgs.getFloatArray(key);
+                float[] data = args.getFloatArray(key);
                 if (data != null && data.length == 3) {
                     List<Double> scale = new ArrayList<>();
                     scale.add((double) data[0]);
@@ -93,7 +86,7 @@ public class SellerFragment extends Fragment implements PostItemListener {
             }
             // Upload picture list
             else if (PostItemFragment.PICTURE_KEY.equals(key)) {
-                List<Bitmap> pictureList = mArgs.getParcelableArrayList(key);
+                List<Bitmap> pictureList = args.getParcelableArrayList(key);
 
                 for (Bitmap bitmap : pictureList) {
 
@@ -129,7 +122,7 @@ public class SellerFragment extends Fragment implements PostItemListener {
                 }
                 itemData.put("imageURLs", imageUrlList);
             } else {
-                itemData.put(key, mArgs.get(key));
+                itemData.put(key, args.get(key));
             }
         }
 

@@ -2,6 +2,7 @@ package edu.uci.cs297p.arfurniture.seller;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,14 @@ public class ModelAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Uri> mUriList = new ArrayList<>();
     private OnModelClickListener mListener;
+    private Bundle mSavedState;
 
     private int mSelectedPos = RecyclerView.NO_POSITION;
 
-    public ModelAdapter(Context context, @Item.Category int category, OnModelClickListener listener) {
+    public ModelAdapter(Context context, @Item.Category int category, OnModelClickListener listener, Bundle savedState) {
         mContext = context;
         mListener = listener;
+        mSavedState = savedState;
         String categoryStr = Item.categoryToStr(category);
         try {
             String[] modelNames = context.getResources().getAssets().list(categoryStr);
@@ -81,6 +84,7 @@ public class ModelAdapter extends RecyclerView.Adapter {
             view.setBackgroundResource(R.color.slate_blue);
             mSelectedPos = position;
             notifyDataSetChanged();
+            mSavedState.putString("modelName", getSelectedModelName());
         });
     }
 

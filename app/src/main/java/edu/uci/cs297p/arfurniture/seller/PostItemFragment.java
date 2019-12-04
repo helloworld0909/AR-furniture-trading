@@ -34,15 +34,16 @@ import static android.app.Activity.RESULT_OK;
 
 public class PostItemFragment extends DialogFragment {
 
-    private final Context mContext;
+    private Context mContext;
     private View mRootView;
     @Item.Category
-    private final int mCategory;
+    private int mCategory;
 
     private Bundle mArBundle = new Bundle();
     private ArrayList<Bitmap> mPictureList = new ArrayList<>();
 
     private RecyclerView.Adapter mPictureListViewAdapter;
+    private ModelAdapter mModelAdapter;
 
     public static final int AR_REQUEST_CODE = 0;
     public static final int CAMERA_REQUEST_CODE = 1;
@@ -50,15 +51,51 @@ public class PostItemFragment extends DialogFragment {
     public static final String COLOR_KEY = "color";
     public static final String PICTURE_KEY = "pictures";
 
+    public PostItemFragment() {
+    }
+
     public PostItemFragment(Context context, @Item.Category int category) {
         mContext = context;
         mCategory = category;
+        Bundle args = new Bundle();
+        args.putInt("category", category);
+        setArguments(args);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_post_item, container, false);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("category", mCategory);
+        outState.putParcelableArrayList("pictures", mPictureList);
+        outState.putBundle("arBundle", mArBundle);
+        outState.putString("modelName", mModelAdapter.getSelectedModelName());
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("category")) {
+                mCategory = savedInstanceState.getInt("category");
+                mPictureList = savedInstanceState.getParcelableArrayList("pictures");
+                mArBundle = savedInstanceState.getBundle("arBundle");
+                if (savedInstanceState.containsKey("modelName")) {
+                    mArBundle.putString("modelName", savedInstanceState.getString("modelName"));
+                }
+            }
+        } else {
+            Bundle args = getArguments();
+            if (args != null) {
+                mCategory = args.getInt("category");
+            }
+        }
+        mContext = getActivity();
     }
 
     @Override
@@ -91,26 +128,29 @@ public class PostItemFragment extends DialogFragment {
         });
 
         RecyclerView modelGallery = mRootView.findViewById(R.id.model_gallery);
-        ModelAdapter modelAdapter = new ModelAdapter(mContext, mCategory, uri -> {
+        mModelAdapter = new ModelAdapter(mContext, mCategory, uri -> {
             Bundle args = new Bundle();
             args.putParcelable("uri", uri);
             Intent intent = new Intent(mContext, SceneViewActivity.class);
             intent.putExtras(args);
             startActivity(intent);
-        });
-        modelGallery.setAdapter(modelAdapter);
+        }, mArBundle);
+        modelGallery.setAdapter(mModelAdapter);
 
         Button arButton = mRootView.findViewById(R.id.ar_support_button);
         arButton.setOnClickListener(clickedView -> {
             Intent intent = new Intent(mContext, ARActivity.class);
             intent.putExtra(ARActivity.FLAG_KEY, ARActivity.SELLER);
-            intent.putExtra(ARActivity.URI_KEY, modelAdapter.getSelectedUri());
+            intent.putExtra(ARActivity.URI_KEY, mModelAdapter.getSelectedUri());
             startActivityForResult(intent, AR_REQUEST_CODE);
         });
 
         Button submitButton = mRootView.findViewById(R.id.submit_button);
         submitButton.setOnClickListener((clickedView) -> {
-            mArBundle.putString("modelName", modelAdapter.getSelectedModelName());
+            if (mArBundle.getString("modelName") == null) {
+                Toast.makeText(mContext, "model name is null", Toast.LENGTH_SHORT).show();
+                return;
+            }
             submit();
         });
     }
@@ -125,6 +165,7 @@ public class PostItemFragment extends DialogFragment {
     public void submit() {
 
         Bundle args = new Bundle();
+        args.putInt("category", mCategory);
         args.putString("name", ((TextView) mRootView.findViewById(R.id.item_name_text)).getText().toString());
         args.putString("description", ((TextView) mRootView.findViewById(R.id.item_description_text)).getText().toString());
         args.putString("price", ((TextView) mRootView.findViewById(R.id.item_price_text)).getText().toString());

@@ -1,0 +1,231 @@
+{
+  materials: [
+    {
+      name: 'LEATHER::Pattern 1::Chocolate',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: '3_1_16_d',
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'PLASTIC::PVC::Opaque Black',
+      parameters: [
+        {
+          baseColor: [
+            0.0078429999999999993,
+            0.0039220000000000001,
+            0.0039220000000000001,
+            1,
+          ],
+        },
+        {
+          baseColorMap: null,
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'METAL::Smooth::Chrome Satin',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: null,
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'PLASTIC::PVC Foam Board::Black',
+      parameters: [
+        {
+          baseColor: [
+            0.0039220000000000001,
+            0.0078429999999999993,
+            0.0039220000000000001,
+            1,
+          ],
+        },
+        {
+          baseColorMap: null,
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'METAL::Smooth::Chrome Polished',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: null,
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/chair_2/Codutti_Genesis_chair.FBX',
+    name: 'Codutti_Genesis_chair',
+    recenter: 'root',
+  },
+  samplers: [
+    {
+      file: 'sampledata/chair_2\\15_2_1_b.jpg',
+      name: '15_2_1_b',
+      params: {
+        usage_type: 'Data',
+      },
+      pipeline_name: '15_2_1_b.jpg',
+    },
+    {
+      file: 'sampledata/chair_2\\3_1_1_b.jpg',
+      name: '3_1_1_b',
+      params: {
+        usage_type: 'Data',
+      },
+      pipeline_name: '3_1_1_b.jpg',
+    },
+    {
+      file: 'sampledata/chair_2\\3_1_16_d.jpg',
+      name: '3_1_16_d',
+      pipeline_name: '3_1_16_d.jpg',
+    },
+  ],
+  version: '0.54:2',
+}
